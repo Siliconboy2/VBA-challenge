@@ -1,0 +1,37 @@
+Sub main()
+
+i = 2
+j = 2
+Dim OpenV As Double
+Dim CloseV As Double
+Dim YearlyChange As Double
+Dim PercentChange As Double
+Dim TotalVolume As Double
+Do While IsEmpty(Cells(i, 1).Value) = False
+    If Cells(i, 1) <> Cells(i - 1, 1) Then
+        Cells(j, 9).Value = Cells(i, 1).Value
+        OpenV = Cells(i, 3).Value
+        Cells(j - 1, 12).Value = TotalVolume
+        TotalVolume = 0 + Cells(i, 7).Value
+        j = j + 1
+        i = i + 1
+    ElseIf Cells(i, 1) = Cells(i - 1, 1) Then
+        TotalVolume = TotalVolume + Cells(i, 7).Value
+        i = i + 1
+    End If
+    If Cells(i, 1).Value <> Cells(i + 1, 1).Value Then
+        CloseV = Cells(i, 6).Value
+        YearlyChange = CloseV - OpenV
+        Cells(j - 1, 10).Value = YearlyChange
+        If YearlyChange <> 0 Then
+            PercentChange = (YearlyChange / OpenV)
+            Cells(j - 1, 11).Value = FormatPercent(PercentChange)
+        If YearlyChange > 0 Then
+            Cells(j - 1, 10).Interior.Color = RGB(0, 255, 0)
+        ElseIf YearlyChange < 0 Then
+            Cells(j - 1, 10).Interior.Color = RGB(255, 0, 0)
+        End If
+        End If
+    End If
+Loop
+End Sub
